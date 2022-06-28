@@ -19,8 +19,8 @@ server.bind = "{{ lighttpd_server_bind_address }}"
 server.document-root = "{{ lighttpd_debian_info.default_root }}"
 server.errorlog = "/var/log/lighttpd/error.log"
 server.groupname = "www-data"
-server.max-connections = {{ (lighttpd_redhat_info.max_fds|int / 2) | round | int }}
-server.max-fds = {{ lighttpd_redhat_info.max_fds }}
+server.max-connections = {{ (lighttpd_debian_info.max_fds|int / 2) | round | int }}
+server.max-fds = {{ lighttpd_debian_info.max_fds }}
 server.pid-file = "/var/run/lighttpd.pid"
 server.port = {{ lighttpd_server_port }}
 server.upload-dirs = ( "/var/cache/lighttpd/uploads" )
@@ -40,7 +40,7 @@ var.socket_dir = home_dir + "/sockets"
 var.state_dir = "/var/run"
 var.vhosts_dir = server_root + "/vhosts"
 index-file.names += (
-  {% for item in lighttpd_debian_info.index_filenames %}"{{ item }}"{% if not loop.last %}, {% endif %}{% endfor %}
+  {% for item in lighttpd_redhat_info.index_filenames %}"{{ item }}"{% if not loop.last %}, {% endif %}{% endfor %}
 
 )
 {% if lighttpd_server_bind_address == "0.0.0.0" %}
